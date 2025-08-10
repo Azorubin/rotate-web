@@ -1,52 +1,20 @@
-*{box-sizing:border-box}
 :root{
-  --bg:#0b0b0b;
-  --btn-bg:rgba(0,0,0,0.6);
-  --btn-border:rgba(255,255,255,0.06);
-  --btn-color:#fff;
+  --bg:#08121a;
+  --card:#0f2a36;
+  --accent:#00c853;
+  --text:#e6f7ff;
 }
-html,body{
-  height:100%;
-  margin:0;
-  background:var(--bg);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-#controls{
-  position:fixed;
-  top:10px;
-  left:10px;
-  z-index:1000;
-  display:flex;
-  gap:8px;
-}
-#controls button{
-  padding:8px 12px;
-  font-size:14px;
-  background:var(--btn-bg);
-  color:var(--btn-color);
-  border:1px solid var(--btn-border);
-  border-radius:8px;
-  cursor:pointer;
-  backdrop-filter: blur(6px);
-}
-#frameWrap{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-#browserFrame{
-  width:100%;
-  height:100%;
-  border:0;
-  transform-origin:center center;
-  transition:transform 0.6s ease;
-  background:#fff;
-}
-@media (max-width:700px){
-  #controls button{ font-size:13px; padding:7px 10px; }
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
+main{max-width:720px;margin:40px auto;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px}
+h1{margin:0 0 10px;font-size:26px}
+p{margin:0 0 16px;color:rgba(230,247,255,0.9)}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+button{background:var(--card);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:10px 14px;border-radius:10px;font-size:16px;cursor:pointer}
+button.primary{background:var(--accent);color:#00110a;border:none}
+#log{font-size:14px;line-height:1.4;color:rgba(230,247,255,0.9);min-height:40px}
+@media (max-width:420px){
+  main{margin:20px;padding:12px}
+  h1{font-size:20px}
+  button{font-size:14px;padding:8px 10px}
 }

@@ -1,78 +1,76 @@
 (function(){
-  const frame = document.getElementById('browserFrame');
-  const backBtn = document.getElementById('backBtn');
-  const reloadBtn = document.getElementById('reloadBtn');
+  const rotateBtn = document.getElementById('rotateBtn');
+  const toggleAutoBtn = document.getElementById('toggleAutoBtn');
+  const log = document.getElementById('log');
 
   let isPortrait = true;
-  let timerId = null;
+  let autoTimer = null;
+  let autoEnabled = false;
+
+  function logMsg(msg) {
+    const time = new Date().toLocaleTimeString();
+    log.textContent = `${time} — ${msg}`;
+  }
+
+  async function toggleOrientation() {
+    // Try Screen Orientation API
+    if (screen.orientation && screen.orientation.lock) {
+      try {
+        const target = screen.orientation.type.startsWith('portrait') ? 'landscape' : 'portrait';
+        await screen.orientation.lock(target);
+        logMsg('Ориентация установлена: ' + target);
+      } catch (err) {
+        logMsg('Не удалось сменить ориентацию: ' + err);
+      }
+    } else {
+      // Fallback: rotate the whole body visually
+      isPortrait = !isPortrait;
+      document.body.style.transform = isPortrait ? 'rotate(0deg)' : 'rotate(90deg)';
+      document.body.style.transformOrigin = 'center center';
+      document.body.style.transition = 'transform 0.5s ease';
+      logMsg('Визуальная ротация: ' + (isPortrait ? 'portrait' : 'landscape'));
+    }
+  }
 
   function scheduleNext() {
     const next = Math.floor(Math.random() * (50 - 30 + 1) + 30) * 1000;
-    timerId = setTimeout(rotateScreen, next);
-    console.log('Next rotation in', next/1000, 's');
+    autoTimer = setTimeout(async () => {
+      await toggleOrientation();
+      if (autoEnabled) scheduleNext();
+    }, next);
+    logMsg('Следующая автопереключение через ' + (next/1000) + ' с');
   }
 
-  function rotateScreen(){
-    isPortrait = !isPortrait;
-    // rotate iframe visually
-    frame.style.transform = isPortrait ? 'rotate(0deg)' : 'rotate(90deg)';
+  rotateBtn.addEventListener('click', toggleOrientation);
 
-    // when rotated 90deg, we also fit it by swapping width/height visually using scale for small screens
-    if (!isPortrait) {
-      frame.style.width = '100vh';
-      frame.style.height = '100vw';
+  toggleAutoBtn.addEventListener('click', () => {
+    autoEnabled = !autoEnabled;
+    toggleAutoBtn.textContent = 'Авто-вращение: ' + (autoEnabled ? 'вкл' : 'выкл');
+    if (autoEnabled) {
+      scheduleNext();
     } else {
-      frame.style.width = '100%';
-      frame.style.height = '100%';
-    }
-
-    // schedule next
-    scheduleNext();
-  }
-
-  // start first rotation after a random delay
-  scheduleNext();
-
-  // Back button: try to navigate iframe history, fallback to window.history
-  backBtn.addEventListener('click', () => {
-    try {
-      const fw = frame.contentWindow;
-      if (fw && fw.history && fw.history.length > 1) {
-        fw.history.back();
-      } else {
-        if (window.history.length > 1) window.history.back();
-      }
-    } catch (e) {
-      // cross-origin iframe -> cannot access history
-      // fallback: reload frame to its src or navigate parent
-      frame.src = frame.src;
+      clearTimeout(autoTimer);
+      autoTimer = null;
+      logMsg('Авто-вращение остановлено');
     }
   });
 
-  // reload button
-  reloadBtn.addEventListener('click', () => {
-    try {
-      frame.contentWindow.location.reload();
-    } catch(e) {
-      frame.src = frame.src;
-    }
-  });
-
-  // Pause rotation while user interacts (touchstart), resume after short idle
-  let idleTimeout = null;
-  function onUserActivity(){
-    if (timerId) { clearTimeout(timerId); timerId = null; }
-    if (idleTimeout) clearTimeout(idleTimeout);
-    idleTimeout = setTimeout(()=>{ scheduleNext(); }, 10000);
+  // Register SW
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').then(() => {
+      logMsg('Service Worker зарегистрирован');
+    }).catch(err => {
+      logMsg('SW: ' + err);
+    });
   }
-  window.addEventListener('touchstart', onUserActivity, {passive:true});
-  window.addEventListener('mousemove', onUserActivity);
 
-  // accessibility: allow keyboard B key to go back
-  window.addEventListener('keydown', (e)=> {
-    if (e.key === 'b' || e.key === 'B') {
-      backBtn.click();
-    }
+  // Prompt install on supporting browsers
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // show a custom install prompt (could add UI)
+    logMsg('PWA готова к установке (можно добавить на главный экран)');
   });
 
 })();

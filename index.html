@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Rotate Browser Web</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotate Web App</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+
+  <!-- iOS PWA meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="RotateApp">
 </head>
 <body>
-  <div id="controls">
-    <button id="backBtn" aria-label="Назад">⬅ Назад</button>
-    <button id="reloadBtn" aria-label="Обновить">⟳ Обновить</button>
-  </div>
+  <main>
+    <h1>📱 Rotate Web App</h1>
+    <p>Это PWA-версия. Нажми кнопку, чтобы сменить ориентацию экрана (Если браузер поддерживает Screen Orientation API).</p>
 
-  <div id="frameWrap">
-    <iframe id="browserFrame" src="https://yandex.ru/games" frameborder="0" sandbox="allow-scripts allow-forms allow-same-origin allow-popups" ></iframe>
-  </div>
+    <div class="buttons">
+      <button id="rotateBtn">Сменить ориентацию</button>
+      <button id="toggleAutoBtn">Авто-вращение: выкл</button>
+    </div>
+
+    <section id="log" aria-live="polite"></section>
+  </main>
 
   <script src="script.js"></script>
 </body>
