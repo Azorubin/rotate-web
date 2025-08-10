@@ -2,30 +2,27 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotate Web App</title>
-  <link rel="stylesheet" href="style.css">
-
-  <!-- PWA manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#000000">
-
-  <!-- iOS PWA meta -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="RotateApp">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rotate & Launch Yandex Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="RotateApp" />
 </head>
 <body>
   <main>
-    <h1>📱 Rotate Web App</h1>
-    <p>Это PWA-версия. Нажми кнопку, чтобы сменить ориентацию экрана (Если браузер поддерживает Screen Orientation API).</p>
+    <h1>🕹️ Rotate & Launch Yandex Games</h1>
+    <p>Открывай Яндекс Игры в новой вкладке и смотри, как меняется ориентация экрана этого приложения.</p>
 
     <div class="buttons">
+      <button id="openYandexBtn">Открыть Яндекс Игры</button>
       <button id="rotateBtn">Сменить ориентацию</button>
       <button id="toggleAutoBtn">Авто-вращение: выкл</button>
     </div>
 
-    <section id="log" aria-live="polite"></section>
+    <section id="log" aria-live="polite" role="log"></section>
   </main>
 
   <script src="script.js"></script>

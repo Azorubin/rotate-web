@@ -1,20 +1,62 @@
-:root{
-  --bg:#08121a;
-  --card:#0f2a36;
-  --accent:#00c853;
-  --text:#e6f7ff;
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #eee;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
 }
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--text)}
-main{max-width:720px;margin:40px auto;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px}
-h1{margin:0 0 10px;font-size:26px}
-p{margin:0 0 16px;color:rgba(230,247,255,0.9)}
-.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-button{background:var(--card);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:10px 14px;border-radius:10px;font-size:16px;cursor:pointer}
-button.primary{background:var(--accent);color:#00110a;border:none}
-#log{font-size:14px;line-height:1.4;color:rgba(230,247,255,0.9);min-height:40px}
-@media (max-width:420px){
-  main{margin:20px;padding:12px}
-  h1{font-size:20px}
-  button{font-size:14px;padding:8px 10px}
+
+main {
+  max-width: 600px;
+  margin: auto;
+  background: #222;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+h1 {
+  margin-bottom: 0.3em;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  color: #aaa;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+}
+
+button {
+  background: #00c853;
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+button:hover {
+  background: #009624;
+}
+
+#log {
+  font-size: 14px;
+  min-height: 60px;
+  background: #111;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: left;
+  overflow-y: auto;
+  max-height: 120px;
+  color: #0f0;
+  font-family: monospace;
 }
